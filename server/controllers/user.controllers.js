@@ -2,16 +2,15 @@ import { User } from "../models/user.models.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-
 export const register = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username, password, role } = req.body;
 
-    if (!username ||  !password) {
-        return res.status(400).json({
-          message: "Password and Name are required",
-        });
-      }
+    if (!username || !password) {
+      return res.status(400).json({
+        message: "Password and Name are required",
+      });
+    }
 
     const existingUser = await User.findOne({ username });
     if (existingUser) {
@@ -20,10 +19,12 @@ export const register = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    const userRole = role === "admin" ? "admin" : "employee";
+
     const newUser = await User.create({
       username,
       password: hashedPassword,
-      role: "employee", 
+      role: userRole,
     });
 
     await newUser.save();
@@ -42,31 +43,41 @@ export const login = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-   
-    if (username === 'admin' && password === 'admin') {
-      const token = jwt.sign(
-        { id: 'admin', role: 'admin' },
-        process.env.JWT_SECRET,
-        { expiresIn: '24h' }
-      );
-      return res.json({ token });
-    }
+    // if (username === "admin" && password === "admin") {
+    //   const token = jwt.sign(
+    //     { id: "admin", role: "admin" },
+    //     process.env.JWT_SECRET,
+    //     { expiresIn: "24h" }
+    //   );
+    //   return res.json({ token, data: {
+    //     id: 'admin',
+    //     username: 'admin',
+    //     role: 'admin',
+    //   } });
+    // }
 
-  
     const user = await User.findOne({ username });
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
-
 
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET,
-      { expiresIn: '24h' }
+      { expiresIn: "24h" }
     );
 
-    res.json({ token });
+    res.json({
+      token,
+      data: {
+        id: user._id,
+        username: user.username,
+        role: user.role,
+      },
+    });
   } catch (error) {
-    res.status(500).json({ message: 'Internal Server Error', error: error.message });
+    res
+      .status(500)
+      .json({ message: "Internal Server Error", error: error.message });
   }
 };
