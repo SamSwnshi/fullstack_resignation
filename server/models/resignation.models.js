@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
+
 
 const resignationSchema = new mongoose.Schema({
   employeeId: {
@@ -23,7 +24,6 @@ const resignationSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-const Resignation = mongoose.model("Resignation",resignationSchema);
+const Resignation = mongoose.model("Resignation", resignationSchema);
 
 export default Resignation;
-
