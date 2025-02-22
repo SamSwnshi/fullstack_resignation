@@ -16,9 +16,22 @@ const Login = () => {
 
     try {
       const response = await api.post('/auth/login', { username, password });
-      const { token } = response.data;
+      const { token, data } = response.data;
+      const { role } = data;
+
+
+      console.log('User Role:', role);
+      console.log('User ', response.data);
+
       localStorage.setItem('token', token);
-      navigate('/dashboard');
+
+      if (role === 'admin') {
+        console.log('Redirecting to admin dashboard');
+        navigate('/admin');
+      } else {
+        console.log('Redirecting to user dashboard');
+        navigate('/dashboard');
+      }
     } catch (error) {
       setError('Invalid credentials. Please try again.');
       console.error('Login failed:', error);
