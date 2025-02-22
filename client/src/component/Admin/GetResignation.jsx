@@ -11,6 +11,7 @@ const GetResignation = () => {
     const fetchResignations = async () => {
       try {
         const response = await api.get('/admin/resignations');
+        console.log(response.data.data)
         setResignations(response.data.data);
       } catch (error) {
         setError('Failed to fetch resignations.');
@@ -19,11 +20,16 @@ const GetResignation = () => {
     };
 
     fetchResignations();
-  }, []);
+    navigate(1);
+  }, [navigate]);
 
-  const handleResignationClick = (resignationId) => {
+  const handleResignationClick = (resignation) => {
+    if (resignation.status === 'Approved' || resignation.status === 'Rejected') {
+      return; // Do nothing if already concluded
+    }
+    console.log("Data:",resignation)
 
-    navigate(`/admin/conclude_resignation/${resignationId}`);
+    navigate(`/admin/conclude_resignation/${resignation}`);
   };
 
   return (

@@ -19,10 +19,11 @@ const ExitResponse = () => {
     };
 
     fetchExitResponses();
-  }, []);
+    navigate(1);
+  }, [navigate]);
 
   const handleBackToAdmin = () => {
-    navigate('/admin');
+    navigate('/admin/resignations');
   };
 
   return (

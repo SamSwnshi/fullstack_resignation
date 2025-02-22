@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './component/Login/Login';
 import Signup from './component/SignUp/Signup';
@@ -12,19 +11,24 @@ import Resign from './component/User/Resign';
 import ExitQuestions from './component/User/ExitQuestions';
 import Notifications from './component/User/Notification';
 import Status from './component/User/Status';
+import UserLayout from './component/User/UserLayout';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/register" element={<Signup />} />
 
-        <Route path='/resign' element={<Resign/>}/>
-        <Route path='/responses' element={<ExitQuestions/>}/>
-        <Route path='/Status' element={<Status/>}/>
-        <Route path='/notifications' element={<Notifications/>}/>
+        {/* User Private Routes */}
+        <Route path="/user" element={<UserLayout />}>
+          <Route path="resign" element={<Resign />} />
+          <Route path="responses" element={<ExitQuestions />} />
+          <Route path="status" element={<Status />} />
+          <Route path="notifications" element={<Notifications />} />
+        </Route>
 
+        {/* Admin Private Routes */}
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="resignations" element={<Admin />} />
           <Route path="conclude_resignation/:id" element={<ConcludeResignation />} />
@@ -36,4 +40,3 @@ function App() {
 }
 
 export default App;
-

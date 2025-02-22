@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../../config/api';
 
@@ -9,15 +9,26 @@ const ConcludeResignation = () => {
   const [approved, setApproved] = useState(false);
   const [lwd, setLwd] = useState('');
 
+  useEffect(() => {
+
+    navigate(1);
+  }, [navigate]);
+
   const handleConclude = async () => {
     try {
-      await api.put('/conclude_resignation', {
+      await api.put('/admin/conclude_resignation', {
         resignationId: id,
         approved,
         lwd,
       });
+      console.log({
+        resignationId: id,
+        approved,
+        lwd,
+      });
+      
       // Navigate to the /exit_responses route after concluding the resignation
-      navigate('/exit_responses');
+      navigate('/admin/exit_responses');
     } catch (error) {
       setError('Failed to conclude resignation.');
       console.error('Error concluding resignation:', error);
@@ -33,11 +44,11 @@ const ConcludeResignation = () => {
           <label className="block text-gray-700">Approve Resignation</label>
           <select
             value={approved}
-            onChange={(e) => setApproved(e.target.value === 'true')}
+            onChange={(e) => setApproved(e.target.value === 'true')} 
             className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
           >
-            <option value={true}>Approve</option>
-            <option value={false}>Reject</option>
+             <option value={true}>Approve</option>
+             <option value={false}>Reject</option>
           </select>
         </div>
         <div className="mt-4">

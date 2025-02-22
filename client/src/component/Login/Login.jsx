@@ -19,18 +19,20 @@ const Login = () => {
       const { token, data } = response.data;
       const { role } = data;
 
-
       console.log('User Role:', role);
       console.log('User ', response.data);
 
       localStorage.setItem('token', token);
+      localStorage.setItem('role', role); // Store role in localStorage
 
       if (role === 'admin') {
         console.log('Redirecting to admin dashboard');
         navigate('/admin/resignations');
-      } else {
+      } else if (role === 'employee') {
         console.log('Redirecting to user dashboard');
-        navigate('/resign');
+        navigate('/user/resign');
+      } else {
+        setError('Unauthorized access.');
       }
     } catch (error) {
       setError('Invalid credentials. Please try again.');

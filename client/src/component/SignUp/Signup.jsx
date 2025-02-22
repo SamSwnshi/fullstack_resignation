@@ -20,7 +20,7 @@ const Signup = () => {
       const response = await api.post('/auth/register', { username, email, password });
       const { message } = response.data;
       alert(message);
-      navigate('/login');
+      navigate('/');
     } catch (error) {
       setError('Registration failed. Please try again.');
       console.error('Registration failed:', error);
@@ -72,7 +72,7 @@ const Signup = () => {
         </form>
         <p className="mt-4 text-center text-gray-600">
           Already have an account?{' '}
-          <a href="/login" className="text-blue-500 hover:underline">
+          <a href="/" className="text-blue-500 hover:underline">
             Login here
           </a>
         </p>
