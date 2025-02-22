@@ -1,190 +1,106 @@
-# Samswnshi Fullstack Resignation System
+# Samswnshi Full-Stack Resignation System
 
-## Introduction
-The **Samswnshi Fullstack Resignation System** is a web-based application that facilitates employee resignation processes. It provides a user-friendly interface for employees to submit resignation requests and allows administrators to review, manage, and conclude resignation cases efficiently.
-
-This full-stack application is built using modern JavaScript frameworks and technologies, leveraging **React (Vite)** for the frontend and **Node.js with Express** for the backend. 
-
----
-
-## Table of Contents
-
-- [Introduction](#introduction)
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Directory Structure](#directory-structure)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [API Endpoints](#api-endpoints)
-- [Troubleshooting](#troubleshooting)
-- [Contributors](#contributors)
-- [License](#license)
-
----
+## Overview
+Samswnshi Full-Stack Resignation System is a web-based platform that facilitates employee resignation management. The system enables users to submit resignations, answer exit questionnaires, track their resignation status, and receive notifications. Admins can review resignations, respond to exit questionnaires, and manage resignation approvals.
 
 ## Features
+### User Features:
+- Submit a resignation request
+- Answer exit interview questions
+- View resignation status
+- Receive notifications
 
-### **User Features**
-- Employee registration and login.
-- Submit resignation requests.
-- Answer exit questionnaires.
-- View resignation status updates.
-- Receive notifications.
+### Admin Features:
+- Review and manage resignation requests
+- Respond to exit questionnaires
+- Conclude resignation processes
 
-### **Admin Features**
-- Admin authentication.
-- View pending resignation requests.
-- Approve or reject resignations.
-- Manage exit questionnaires and notifications.
-- Conclude employee resignation process.
+## Tech Stack
+### Frontend:
+- **Framework:** React (Vite)
+- **Styling:** Vanilla CSS
+- **State Management:** Context API
 
----
-
-## Technologies Used
-
-### **Frontend (Client)**
-- **React (Vite)** – Frontend framework
-- **CSS** – Styling
-- **Axios** – API communication
-- **React Router** – Navigation
-
-### **Backend (Server)**
-- **Node.js & Express.js** – Backend framework
-- **MongoDB** – Database
-- **JWT (JSON Web Token)** – Authentication
-- **Mongoose** – ORM for MongoDB
-
----
+### Backend:
+- **Runtime:** Node.js (Express.js)
+- **Database:** MongoDB
+- **Authentication:** JWT & Cookies
 
 ## Directory Structure
+```
+└── samswnshi-fullstack_resignation/
+    ├── client/                # Frontend React app
+    │   ├── public/            # Static assets
+    │   ├── src/               # Source code
+    │   │   ├── component/     # UI Components
+    │   │   ├── config/        # API configuration
+    │   │   ├── assets/        # Images and assets
+    ├── server/                # Backend Node.js app
+    │   ├── controllers/       # Business logic
+    │   ├── db/                # Database configuration
+    │   ├── middleware/        # Authentication middleware
+    │   ├── models/            # Mongoose schema models
+    │   ├── routes/            # API endpoints
+    │   ├── utils/             # Utility functions
+```
 
-```plaintext
-samswnshi-fullstack_resignation/
-├── client/ (Frontend)
-│   ├── public/ (Static assets)
-│   ├── src/ (Source code)
-│   │   ├── component/ (Reusable UI components)
-│   │   │   ├── Admin/ (Admin views)
-│   │   │   ├── User/ (User views)
-│   │   │   ├── Login/ (Login component)
-│   │   │   ├── SignUp/ (Signup component)
-│   │   ├── config/api.js (API configuration)
-│   ├── package.json (Dependencies)
-│   ├── vite.config.js (Vite configuration)
-│   ├── .env (Environment variables)
-│
-├── server/ (Backend)
-│   ├── controllers/ (Business logic)
-│   ├── models/ (Database models)
-│   ├── routes/ (API routes)
-│   ├── middleware/ (Auth middleware)
-│   ├── db/config.js (Database configuration)
-│   ├── utils/calendarific.js (Utility functions)
-│   ├── server.js (Main server file)
-│   ├── package.json (Dependencies)
-│   ├── .env (Environment variables)
-Installation
-Prerequisites
-Node.js
-MongoDB
-Git
-Steps to Run Locally
-Clone the repository
+## Installation
+### Prerequisites:
+- Node.js (v16+)
+- MongoDB (local or cloud instance)
+- Vite (for frontend development)
 
-sh
-Copy
-Edit
-git clone https://github.com/your-username/samswnshi-fullstack_resignation.git
-cd samswnshi-fullstack_resignation
-Install Dependencies
+### Steps:
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/your-repo/samswnshi-fullstack_resignation.git
+   cd samswnshi-fullstack_resignation
+   ```
 
-For Backend
+2. **Setup Client:**
+   ```sh
+   cd client
+   npm install
+   npm run dev
+   ```
 
-sh
-Copy
-Edit
-cd server
-npm install
-For Frontend
+3. **Setup Server:**
+   ```sh
+   cd ../server
+   npm install
+   npm start
+   ```
 
-sh
-Copy
-Edit
-cd client
-npm install
-Setup Environment Variables
+## Environment Variables
+Create a `.env` file in both `client/` and `server/` directories.
+### For the Client:
+```
+VITE_API_URL=http://localhost:5000
+```
 
-Create a .env file in both the client/ and server/ directories.
-Add necessary API keys and configurations.
-Run the Backend
-
-sh
-Copy
-Edit
-cd server
-npm start
-The backend will start at http://localhost:5000
-
-Run the Frontend
-
-sh
-Copy
-Edit
-cd client
-npm run dev
-The frontend will start at http://localhost:5173
-
-Configuration
-Backend Environment Variables (server/.env)
-plaintext
-Copy
-Edit
-PORT=5000
-MONGO_URI=your_mongodb_connection_string
+### For the Server:
+```
+PORT=8080
+MONGO_URI=mongodb://localhost:27017/resignationDB
 JWT_SECRET=your_jwt_secret
-Frontend Environment Variables (client/.env)
-plaintext
-Copy
-Edit
-VITE_API_BASE_URL=http://localhost:5000
-Usage
-For Users
-Register and log in.
-Submit a resignation request.
-Answer the exit questionnaire.
-View the status of resignation requests.
-For Admins
-Log in as an admin.
-Review employee resignations.
-Approve, reject, or conclude resignation cases.
-Send notifications to users.
-API Endpoints
-Endpoint	Method	Description
-/api/auth/login	POST	User/Admin login
-/api/auth/signup	POST	User signup
-/api/user/resign	POST	Submit resignation request
-/api/user/status	GET	Get resignation status
-/api/admin/resignations	GET	View all resignations
-/api/admin/approve/:id	PUT	Approve a resignation
-/api/admin/reject/:id	PUT	Reject a resignation
-Troubleshooting
-Common Issues & Solutions
-MongoDB Connection Error
+```
 
-Ensure MongoDB is running locally or using a cloud database.
-Check if MONGO_URI in .env is correct.
-Frontend Not Connecting to Backend
+## API Endpoints
+### Authentication:
+- `POST /api/auth/signup` - Register a new user
+- `POST /api/auth/login` - Login and receive a token
 
-Make sure the backend is running.
-Verify VITE_API_BASE_URL in client/.env.
-Authentication Issues
+### User:
+- `POST /api/user/resign` - Submit a resignation
+- `GET /api/user/status` - Check resignation status
 
-Ensure JWT_SECRET in backend .env is correct.
-If using Postman, add Authorization headers properly.
-Contributors
-Your Name - GitHub Profile
-Other Contributors - Feel free to add your name if you contribute!
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
+### Admin:
+- `GET /api/admin/resignations` - View all resignation requests
+- `POST /api/admin/conclude` - Conclude a resignation process
+
+## Contributing
+Feel free to fork the repository, make improvements, and submit pull requests.
+
+## License
+This project is licensed under the MIT License.
 
