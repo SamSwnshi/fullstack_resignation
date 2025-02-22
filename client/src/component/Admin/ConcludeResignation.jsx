@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../../config/api';
 
@@ -9,15 +9,15 @@ const ConcludeResignation = () => {
   const [approved, setApproved] = useState(false);
   const [lwd, setLwd] = useState('');
 
-
   const handleConclude = async () => {
     try {
-      await api.put('/admin/conclude_resignation', {
+      await api.put('/conclude_resignation', {
         resignationId: id,
         approved,
         lwd,
       });
-      navigate('/admin');
+      // Navigate to the /exit_responses route after concluding the resignation
+      navigate('/exit_responses');
     } catch (error) {
       setError('Failed to conclude resignation.');
       console.error('Error concluding resignation:', error);
@@ -29,7 +29,6 @@ const ConcludeResignation = () => {
       <h2 className="text-2xl font-bold mb-4">Conclude Resignation</h2>
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <div className="mb-4 p-4 border rounded shadow">
-        
         <div className="mt-4">
           <label className="block text-gray-700">Approve Resignation</label>
           <select

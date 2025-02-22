@@ -22,7 +22,8 @@ const GetResignation = () => {
   }, []);
 
   const handleResignationClick = (resignationId) => {
-    navigate(`/conclude_resignation/${resignationId}`);
+
+    navigate(`/admin/conclude_resignation/${resignationId}`);
   };
 
   return (

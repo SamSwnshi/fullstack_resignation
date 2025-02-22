@@ -27,10 +27,10 @@ const Login = () => {
 
       if (role === 'admin') {
         console.log('Redirecting to admin dashboard');
-        navigate('/admin');
+        navigate('/admin/resignations');
       } else {
         console.log('Redirecting to user dashboard');
-        navigate('/dashboard');
+        navigate('/resign');
       }
     } catch (error) {
       setError('Invalid credentials. Please try again.');

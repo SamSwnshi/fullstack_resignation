@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import api from '../../config/api';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -16,11 +17,8 @@ const Signup = () => {
     const password = form.password.value;
 
     try {
-      const response = await axios.post('/api/register', { username, email, password });
-      // Assuming the backend returns a success message or token upon successful registration
+      const response = await api.post('/auth/register', { username, email, password });
       const { message } = response.data;
-
-      // Display success message or redirect to login page
       alert(message);
       navigate('/login');
     } catch (error) {
