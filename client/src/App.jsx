@@ -9,6 +9,9 @@ import Admin from './component/Admin/Admin';
 import ConcludeResignation from './component/Admin/ConcludeResignation';
 import ExitResponse from './component/Admin/ExitResponse';
 import Resign from './component/User/Resign';
+import ExitQuestions from './component/User/ExitQuestions';
+import Notifications from './component/User/Notification';
+import Status from './component/User/Status';
 
 function App() {
   return (
@@ -18,7 +21,10 @@ function App() {
         <Route path="/register" element={<Signup />} />
 
         <Route path='/resign' element={<Resign/>}/>
-        
+        <Route path='/responses' element={<ExitQuestions/>}/>
+        <Route path='/Status' element={<Status/>}/>
+        <Route path='/notifications' element={<Notifications/>}/>
+
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="resignations" element={<Admin />} />
           <Route path="conclude_resignation/:id" element={<ConcludeResignation />} />
