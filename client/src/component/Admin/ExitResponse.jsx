@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../config/api';
 
 const ExitResponse = () => {
   const [responses, setResponses] = useState([]);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { resignationId } = useParams(); // Get resignationId from URL params
 
   useEffect(() => {
     const fetchExitResponses = async () => {
@@ -24,6 +25,10 @@ const ExitResponse = () => {
 
   const handleBackToAdmin = () => {
     navigate('/admin/resignations');
+  };
+
+  const handleBackToConclude = () => {
+    navigate(`/admin/conclude_resignation/${resignationId}`);
   };
 
   return (
@@ -53,12 +58,20 @@ const ExitResponse = () => {
       ) : (
         <p>No exit responses found.</p>
       )}
-      <button
-        onClick={handleBackToAdmin}
-        className="mt-4 px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-      >
-        Back to Admin
-      </button>
+      <div className="flex gap-4 mt-4">
+        <button
+          onClick={handleBackToConclude}
+          className="px-4 py-2 text-white bg-gray-500 rounded hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
+        >
+          Back to Conclude Resignation
+        </button>
+        <button
+          onClick={handleBackToAdmin}
+          className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+        >
+          Back to Admin
+        </button>
+      </div>
     </div>
   );
 };

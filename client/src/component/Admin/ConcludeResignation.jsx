@@ -9,10 +9,9 @@ const ConcludeResignation = () => {
   const [approved, setApproved] = useState(false);
   const [lwd, setLwd] = useState('');
 
-  useEffect(() => {
-
-    navigate(1);
-  }, [navigate]);
+  // useEffect(() => {
+  //   navigate(1);
+  // }, [navigate]);
 
   const handleConclude = async () => {
     try {
@@ -47,8 +46,8 @@ const ConcludeResignation = () => {
             onChange={(e) => setApproved(e.target.value === 'true')} 
             className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
           >
-             <option value={true}>Approve</option>
-             <option value={false}>Reject</option>
+            <option value={true}>Approve</option>
+            <option value={false}>Reject</option>
           </select>
         </div>
         <div className="mt-4">
@@ -60,12 +59,20 @@ const ConcludeResignation = () => {
             className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
           />
         </div>
-        <button
-          onClick={handleConclude}
-          className="mt-4 px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-        >
-          Conclude Resignation
-        </button>
+        <div className="flex justify-between mt-4">
+          <button
+            onClick={handleConclude}
+            className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+          >
+            Conclude Resignation
+          </button>
+          <button
+            onClick={() => navigate('/admin/resignations')}
+            className="px-4 py-2 text-white bg-gray-500 rounded hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
+          >
+            Back to Resignations
+          </button>
+        </div>
       </div>
     </div>
   );

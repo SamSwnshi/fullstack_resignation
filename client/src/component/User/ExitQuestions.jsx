@@ -32,7 +32,7 @@ const ExitQuestions = () => {
       await api.post('/user/responses', { responses });
       setStatus({ message: 'Exit questionnaire submitted successfully', error: false });
       setTimeout(() => {
-        navigate('/resignation_status'); 
+        navigate('/user/status'); 
       }, 2000);
     } catch (error) {
       setStatus({ 

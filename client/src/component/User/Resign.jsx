@@ -20,7 +20,7 @@ const Resign = () => {
             });
         }
         setTimeout(() => {
-            navigate('/responses');
+            navigate('/user/responses');
         }, 3000);
     };
 

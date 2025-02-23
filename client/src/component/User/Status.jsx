@@ -11,7 +11,8 @@ const Status = () => {
   useEffect(() => {
     const fetchResignationStatus = async () => {
       try {
-        const response = await api.post('/resignation_status');
+        const response = await api.post('/user/resignation_status');
+        console.log(response)
         setStatus(response.data.resignation);
       } catch (error) {
         setError('Failed to fetch resignation status. Please try again.');
@@ -65,7 +66,7 @@ const Status = () => {
 
 
         <button 
-          onClick={() => navigate('/resign')}
+          onClick={() => navigate('/user/resign')}
           className="mt-4 w-full py-3 bg-red-500 text-white rounded-lg text-lg font-semibold hover:bg-red-600 transition"
         >
           Resign Again

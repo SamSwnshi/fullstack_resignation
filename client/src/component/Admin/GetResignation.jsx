@@ -11,7 +11,7 @@ const GetResignation = () => {
     const fetchResignations = async () => {
       try {
         const response = await api.get('/admin/resignations');
-        console.log(response.data.data)
+        console.log(response.data.data);
         setResignations(response.data.data);
       } catch (error) {
         setError('Failed to fetch resignations.');
@@ -24,12 +24,10 @@ const GetResignation = () => {
   }, [navigate]);
 
   const handleResignationClick = (resignation) => {
-    if (resignation.status === 'Approved' || resignation.status === 'Rejected') {
-      return; // Do nothing if already concluded
+    if (resignation.status === 'pending') {
+      console.log('Navigating to:', resignation._id);
+      navigate(`/admin/conclude_resignation/${resignation._id}`);
     }
-    console.log("Data:",resignation)
-
-    navigate(`/admin/conclude_resignation/${resignation}`);
   };
 
   return (
@@ -41,8 +39,10 @@ const GetResignation = () => {
           {resignations.map((resignation) => (
             <li
               key={resignation._id}
-              className="mb-4 p-4 border rounded shadow cursor-pointer"
-              onClick={() => handleResignationClick(resignation._id)}
+              className={`mb-4 p-4 border rounded shadow ${
+                resignation.status === 'pending' ? 'cursor-pointer hover:bg-gray-100' : 'opacity-50 cursor-not-allowed'
+              }`}
+              onClick={() => handleResignationClick(resignation)}
             >
               <p><strong>Employee:</strong> {resignation.employeeId.username}</p>
               <p><strong>Status:</strong> {resignation.status}</p>
