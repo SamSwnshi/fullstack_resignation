@@ -6,10 +6,13 @@ import api from "../../config/api";
 
 const Resign = () => {
     const [lwd, setLwd] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false); 
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsSubmitting(true); 
+        
         try {
             await api.post('/user/resign', { lwd });
             toast.success("Resignation submitted successfully!", {
@@ -25,6 +28,7 @@ const Resign = () => {
                 position: "top-center",
                 autoClose: 2000,
             });
+            setIsSubmitting(false); 
         }
     };
 
@@ -42,13 +46,15 @@ const Resign = () => {
                             onChange={(e) => setLwd(e.target.value)}
                             min={new Date().toISOString().split('T')[0]}
                             required
+                            disabled={isSubmitting} 
                         />
                     </div>
                     <button
                         type="submit"
-                        className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+                        className={`w-full p-2 rounded ${isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600 text-white'}`}
+                        disabled={isSubmitting} 
                     >
-                        Submit Resignation
+                        {isSubmitting ? "Submitting..." : "Submit Resignation"}
                     </button>
                 </form>
             </div>
