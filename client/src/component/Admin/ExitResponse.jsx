@@ -1,27 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import api from '../../config/api';
 
 const ExitResponse = () => {
   const [responses, setResponses] = useState([]);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { resignationId } = useParams(); // Get resignationId from URL params
+  const { resignationId } = useParams(); 
 
   useEffect(() => {
     const fetchExitResponses = async () => {
       try {
         const response = await api.get('/admin/exit_responses');
         setResponses(response.data.data);
+
+ 
+        toast.success('Exit responses loaded successfully!', {
+          position: 'top-center',
+          autoClose: 2000,
+        });
+
       } catch (error) {
         setError('Failed to fetch exit responses.');
+
+
+        toast.error('Failed to fetch exit responses. Please try again.', {
+          position: 'top-center',
+          autoClose: 2000,
+        });
+
         console.error('Error fetching exit responses:', error);
       }
     };
 
     fetchExitResponses();
-    navigate(1);
-  }, [navigate]);
+  }, []);
 
   const handleBackToAdmin = () => {
     navigate('/admin/resignations');

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import api from '../../config/api';
 
 const Notifications = () => {
@@ -11,11 +13,24 @@ const Notifications = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const response = await api.post('/user/resignation_status');
-        console.log(response)
-        setNotifications(response.data);
+        const response = await api.get('/user/notifications');
+        console.log("Response Data:", response);
+        
+    
+        setNotifications(response.data.notifications || []);
+
+        if (response.data.notifications?.length > 0) {
+          toast.success('Notifications fetched successfully!', {
+            position: 'top-right',
+            autoClose: 2000,
+          });
+        }
       } catch (error) {
         setError('Failed to fetch notifications. Please try again.');
+        toast.error('Failed to fetch notifications!', {
+          position: 'top-center',
+          autoClose: 2000,
+        });
       } finally {
         setLoading(false);
       }
@@ -23,6 +38,10 @@ const Notifications = () => {
 
     fetchNotifications();
   }, []);
+
+  const isResignationApproved = notifications.some(
+    (notification) => notification.title === 'Resignation Approved'
+  );
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
@@ -38,22 +57,30 @@ const Notifications = () => {
           <ul className="space-y-4">
             {notifications.map((notification, index) => (
               <li
-                key={index}
+                key={notification._id || index}
                 className={`p-4 rounded text-center ${
                   notification.status === 'accepted' 
                     ? 'bg-green-100 text-green-700' 
                     : 'bg-red-100 text-red-700'
                 }`}
               >
-                {notification.message}
+                <p className="font-semibold">{notification.title}</p>
+                <p>{notification.message}</p>
               </li>
             ))}
           </ul>
         )}
       </div>
+
+      {/* Resign Button - Disabled if Resignation is Approved */}
       <button
         onClick={() => navigate('/resign')}
-        className="mt-6 px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+        disabled={isResignationApproved}
+        className={`mt-6 px-6 py-2 rounded transition ${
+          isResignationApproved
+            ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
+            : 'bg-blue-500 text-white hover:bg-blue-600'
+        }`}
       >
         Resign Again
       </button>

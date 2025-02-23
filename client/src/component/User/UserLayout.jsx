@@ -4,9 +4,9 @@ import UserHeader from './UserHeader';
 
 const UserLayout = () => {
   return (
-    <div className="w-full h-screen flex flex-col bg-gray-100 overflow-hidden">
+    <div className="w-full h-screen flex flex-col bg-gray-100 ">
       <UserHeader />
-      <div className="flex-grow p-6 mt-16 overflow-hidden">
+      <div className="flex-grow p-6 mt-16 ">
         <Outlet />
       </div>
     </div>

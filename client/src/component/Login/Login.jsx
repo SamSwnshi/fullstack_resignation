@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import api from '../../config/api';
 
 const Login = () => {
@@ -8,7 +10,7 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError(''); // Clear any previous errors
+    setError(''); 
 
     const form = event.target;
     const username = form.username.value;
@@ -20,10 +22,12 @@ const Login = () => {
       const { role } = data;
 
       console.log('User Role:', role);
-      console.log('User ', response.data);
+      console.log('User Data:', response.data);
 
       localStorage.setItem('token', token);
-      localStorage.setItem('role', role); // Store role in localStorage
+      localStorage.setItem('role', role);
+
+      toast.success('Login successful!', { position: 'top-center', autoClose: 2000 });
 
       if (role === 'admin') {
         console.log('Redirecting to admin dashboard');
@@ -33,9 +37,11 @@ const Login = () => {
         navigate('/user/resign');
       } else {
         setError('Unauthorized access.');
+        toast.error('Unauthorized access.', { position: 'top-center', autoClose: 2000 });
       }
     } catch (error) {
       setError('Invalid credentials. Please try again.');
+      toast.error('Invalid credentials. Please try again.', { position: 'top-right', autoClose: 3000 });
       console.error('Login failed:', error);
     }
   };

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import api from '../../config/api';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import api from '../../config/api';
 
 const DEFAULT_QUESTIONS = [
   "What is your primary reason for leaving?",
@@ -17,7 +19,6 @@ const ExitQuestions = () => {
   const [responses, setResponses] = useState(
     DEFAULT_QUESTIONS.map(q => ({ questionText: q, response: '' }))
   );
-  const [status, setStatus] = useState({ message: '', error: false });
   const navigate = useNavigate();
 
   const handleResponseChange = (index, value) => {
@@ -30,30 +31,30 @@ const ExitQuestions = () => {
     e.preventDefault();
     try {
       await api.post('/user/responses', { responses });
-      setStatus({ message: 'Exit questionnaire submitted successfully', error: false });
+
+   
+      toast.success('Exit questionnaire submitted successfully!', {
+        position: 'top-center',
+        autoClose: 2000,
+      });
+
       setTimeout(() => {
         navigate('/user/status'); 
       }, 2000);
+      
     } catch (error) {
-      setStatus({ 
-        message: error.response?.data?.message || 'Failed to submit questionnaire', 
-        error: true 
+    
+      toast.error(error.response?.data?.message || 'Failed to submit questionnaire', {
+        position: 'top-center',
+        autoClose: 2000,
       });
     }
-    
   };
 
   return (
     <div className="w-full min-h-screen flex items-center justify-center bg-gray-100">
       <div className="w-full max-w-6xl bg-white rounded-lg shadow-md p-8">
         <h2 className="text-3xl font-bold mb-6 text-center">Exit Interview Questionnaire</h2>
-        {status.message && (
-          <div className={`mb-4 p-3 rounded text-center ${
-            status.error ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'
-          }`}>
-            {status.message}
-          </div>
-        )}
         <form onSubmit={handleSubmit} className="space-y-6">
           {responses.map((item, index) => (
             <div key={index} className="space-y-2">

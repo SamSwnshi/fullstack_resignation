@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import api from '../../config/api';
 
 const GetResignation = () => {
@@ -11,22 +13,40 @@ const GetResignation = () => {
     const fetchResignations = async () => {
       try {
         const response = await api.get('/admin/resignations');
-        console.log(response.data.data);
         setResignations(response.data.data);
+
+
+        toast.success('Resignations loaded successfully!', {
+          position: 'top-center',
+          autoClose: 2000,
+        });
+
       } catch (error) {
         setError('Failed to fetch resignations.');
+
+   
+        toast.error('Failed to fetch resignations. Please try again.', {
+          position: 'top-center',
+          autoClose: 2000,
+        });
+
         console.error('Error fetching resignations:', error);
       }
     };
 
     fetchResignations();
-    navigate(1);
-  }, [navigate]);
+  }, []);
 
   const handleResignationClick = (resignation) => {
     if (resignation.status === 'pending') {
       console.log('Navigating to:', resignation._id);
       navigate(`/admin/conclude_resignation/${resignation._id}`);
+
+
+      toast.info('Navigating to conclude resignation...', {
+        position: 'top-center',
+        autoClose: 1500,
+      });
     }
   };
 

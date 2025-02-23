@@ -1,6 +1,9 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import Login from './component/Login/Login';
 import Signup from './component/SignUp/Signup';
 import AdminLayout from './component/Admin/AdminLayout';
@@ -16,6 +19,7 @@ import UserLayout from './component/User/UserLayout';
 function App() {
   return (
     <Router>
+      <ToastContainer position="top-center" autoClose={2000} />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Signup />} />

@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import api from '../../config/api';
 
 const ConcludeResignation = () => {
@@ -9,10 +11,6 @@ const ConcludeResignation = () => {
   const [approved, setApproved] = useState(false);
   const [lwd, setLwd] = useState('');
 
-  // useEffect(() => {
-  //   navigate(1);
-  // }, [navigate]);
-
   const handleConclude = async () => {
     try {
       await api.put('/admin/conclude_resignation', {
@@ -20,16 +18,26 @@ const ConcludeResignation = () => {
         approved,
         lwd,
       });
-      console.log({
-        resignationId: id,
-        approved,
-        lwd,
+
+
+      toast.success('Resignation concluded successfully!', {
+        position: 'top-center',
+        autoClose: 2000,
       });
-      
-      // Navigate to the /exit_responses route after concluding the resignation
-      navigate('/admin/exit_responses');
+
+    
+      setTimeout(() => {
+        navigate('/admin/exit_responses');
+      }, 2000);
     } catch (error) {
       setError('Failed to conclude resignation.');
+
+
+      toast.error('Failed to conclude resignation. Please try again.', {
+        position: 'top-center',
+        autoClose: 2000,
+      });
+
       console.error('Error concluding resignation:', error);
     }
   };
@@ -43,11 +51,11 @@ const ConcludeResignation = () => {
           <label className="block text-gray-700">Approve Resignation</label>
           <select
             value={approved}
-            onChange={(e) => setApproved(e.target.value === 'true')} 
+            onChange={(e) => setApproved(e.target.value === 'true')}
             className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
           >
-            <option value={true}>Approve</option>
-            <option value={false}>Reject</option>
+            <option value="true">Approve</option>
+            <option value="false">Reject</option>
           </select>
         </div>
         <div className="mt-4">

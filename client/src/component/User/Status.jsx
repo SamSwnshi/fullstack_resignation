@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import api from '../../config/api';
 
 const Status = () => {
@@ -12,10 +14,11 @@ const Status = () => {
     const fetchResignationStatus = async () => {
       try {
         const response = await api.post('/user/resignation_status');
-        console.log(response)
         setStatus(response.data.resignation);
+        toast.success("Resignation status loaded successfully!", { autoClose: 2000 });
       } catch (error) {
         setError('Failed to fetch resignation status. Please try again.');
+        toast.error("Failed to fetch resignation status!", { autoClose: 2000 });
       } finally {
         setLoading(false);
       }
@@ -40,7 +43,7 @@ const Status = () => {
               <span className="font-semibold"> {new Date(status.lwd).toLocaleDateString()}</span>
             </p>
             <p className={`mt-3 text-lg font-medium ${
-              status.status === 'accepted' ? 'text-green-600' 
+              status.status === 'approved' ? 'text-green-600' 
               : status.status === 'rejected' ? 'text-red-600' 
               : 'text-yellow-600'
             }`}>
@@ -51,19 +54,18 @@ const Status = () => {
           <p className="text-gray-600">No resignation request found.</p>
         )}
 
-
+        {/* Check Notifications Button - Enabled Only When Resignation is Approved */}
         <button 
-          onClick={() => navigate('/notifications')}
-          disabled={status?.status !== 'accepted'}
+          onClick={() => navigate('/user/notifications')}
+          disabled={status?.status !== 'approved'}
           className={`mt-6 w-full py-3 rounded-lg text-lg font-semibold transition ${
-            status?.status === 'accepted' 
+            status?.status === 'approved' 
               ? 'bg-blue-500 text-white hover:bg-blue-600' 
               : 'bg-gray-400 text-white cursor-not-allowed'
           }`}
         >
           Check Notifications
         </button>
-
 
         <button 
           onClick={() => navigate('/user/resign')}

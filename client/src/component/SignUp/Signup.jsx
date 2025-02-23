@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import api from '../../config/api';
 
 const Signup = () => {
@@ -9,7 +10,7 @@ const Signup = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError(''); // Clear any previous errors
+    setError('');
 
     const form = event.target;
     const username = form.username.value;
@@ -19,10 +20,15 @@ const Signup = () => {
     try {
       const response = await api.post('/auth/register', { username, email, password });
       const { message } = response.data;
-      alert(message);
-      navigate('/');
+
+      toast.success(message, { position: 'top-center', autoClose: 2000 });
+
+      setTimeout(() => {
+        navigate('/');
+      }, 2000); 
     } catch (error) {
       setError('Registration failed. Please try again.');
+      toast.error('Registration failed. Please try again.', { position: 'top-center', autoClose: 2000 });
       console.error('Registration failed:', error);
     }
   };
