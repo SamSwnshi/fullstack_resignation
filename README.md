@@ -1,7 +1,7 @@
 # Samswnshi Full-Stack Resignation System
 
 ## Overview
-Samswnshi Full-Stack Resignation System is a web-based platform that facilitates employee resignation management. The system enables users to submit resignations, answer exit questionnaires, track their resignation status, and receive notifications. Admins can review resignations, respond to exit questionnaires, and manage resignation approvals.
+Full-Stack Resignation System is a web-based platform that facilitates employee resignation management. The system enables users to submit resignations, answer exit questionnaires, track their resignation status, and receive notifications. Admins can review resignations, respond to exit questionnaires, and manage resignation approvals.
 
 ## Features
 ### User Features:
