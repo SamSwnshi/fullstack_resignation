@@ -33,8 +33,8 @@ const UserHeader = () => {
 
       <div className="flex items-center gap-4">
         {resignationStatus ? (
-          <a 
-            href="/user/status"
+          <Link 
+            to="/user/status"
             className={`px-4 py-2 rounded text-white ${
               resignationStatus === "approved"
                 ? "bg-green-500 hover:bg-green-600"
@@ -46,7 +46,7 @@ const UserHeader = () => {
             {resignationStatus === "approved" ? "Resignation Approved" 
             : resignationStatus === "pending" ? "Pending Resignation" 
             : "Resignation Rejected"}
-          </a>
+          </Link>
         ) : (
           <span className="px-4 py-2 bg-gray-500 text-white rounded">
             No Resignation Submitted
