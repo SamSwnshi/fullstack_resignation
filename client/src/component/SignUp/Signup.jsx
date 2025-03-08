@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../../config/api';
@@ -78,9 +78,9 @@ const Signup = () => {
         </form>
         <p className="mt-4 text-center text-gray-600">
           Already have an account?{' '}
-          <a href="/" className="text-blue-500 hover:underline">
+          <Link to="/" className="text-blue-500 hover:underline">
             Login here
-          </a>
+          </Link>
         </p>
       </div>
     </div>

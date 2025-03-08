@@ -17,16 +17,16 @@ const Resign = () => {
             await api.post('/user/resign', { lwd });
             toast.success("Resignation submitted successfully!", {
                 position: "top-center",
-                autoClose: 2000,
+                autoClose: 1000,
             });
             setLwd('');
             setTimeout(() => {
                 navigate('/user/responses');
-            }, 3000);
+            }, 1000);
         } catch (error) {
             toast.error(error.response?.data?.message || "Failed to submit resignation", {
                 position: "top-center",
-                autoClose: 2000,
+                autoClose: 1000,
             });
             setIsSubmitting(false); 
         }

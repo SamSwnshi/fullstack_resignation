@@ -18,7 +18,7 @@ const GetResignation = () => {
 
         toast.success('Resignations loaded successfully!', {
           position: 'top-center',
-          autoClose: 2000,
+          autoClose: 1000,
         });
 
       } catch (error) {
@@ -27,7 +27,7 @@ const GetResignation = () => {
    
         toast.error('Failed to fetch resignations. Please try again.', {
           position: 'top-center',
-          autoClose: 2000,
+          autoClose: 1000,
         });
 
         console.error('Error fetching resignations:', error);

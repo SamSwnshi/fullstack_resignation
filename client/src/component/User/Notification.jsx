@@ -22,14 +22,14 @@ const Notifications = () => {
         if (response.data.notifications?.length > 0) {
           toast.success('Notifications fetched successfully!', {
             position: 'top-right',
-            autoClose: 2000,
+            autoClose: 1000,
           });
         }
       } catch (error) {
         setError('Failed to fetch notifications. Please try again.');
         toast.error('Failed to fetch notifications!', {
           position: 'top-center',
-          autoClose: 2000,
+          autoClose: 1000,
         });
       } finally {
         setLoading(false);

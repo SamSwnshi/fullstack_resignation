@@ -22,7 +22,7 @@ const ConcludeResignation = () => {
 
       toast.success('Resignation concluded successfully!', {
         position: 'top-center',
-        autoClose: 2000,
+        autoClose: 1000,
       });
 
     

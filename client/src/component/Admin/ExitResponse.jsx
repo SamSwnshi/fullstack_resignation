@@ -19,7 +19,7 @@ const ExitResponse = () => {
  
         toast.success('Exit responses loaded successfully!', {
           position: 'top-center',
-          autoClose: 2000,
+          autoClose: 1000,
         });
 
       } catch (error) {
@@ -28,7 +28,7 @@ const ExitResponse = () => {
 
         toast.error('Failed to fetch exit responses. Please try again.', {
           position: 'top-center',
-          autoClose: 2000,
+          autoClose: 1000,
         });
 
         console.error('Error fetching exit responses:', error);

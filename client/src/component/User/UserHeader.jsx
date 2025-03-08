@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../config/api";
 
 const UserHeader = () => {
@@ -33,7 +33,7 @@ const UserHeader = () => {
 
       <div className="flex items-center gap-4">
         {resignationStatus ? (
-          <a 
+          <Link 
             href="/user/status"
             className={`px-4 py-2 rounded text-white ${
               resignationStatus === "approved"
@@ -46,7 +46,7 @@ const UserHeader = () => {
             {resignationStatus === "approved" ? "Resignation Approved" 
             : resignationStatus === "pending" ? "Pending Resignation" 
             : "Resignation Rejected"}
-          </a>
+          </Link>
         ) : (
           <span className="px-4 py-2 bg-gray-500 text-white rounded">
             No Resignation Submitted
