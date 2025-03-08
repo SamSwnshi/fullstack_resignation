@@ -19,7 +19,7 @@ import UserLayout from './component/User/UserLayout';
 function App() {
   return (
     <Router>
-      <ToastContainer position="top-center" autoClose={2000} />
+      <ToastContainer position="top-center" autoClose={1000} />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Signup />} />
