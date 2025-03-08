@@ -7,10 +7,12 @@ import api from '../../config/api';
 const Login = () => {
   const navigate = useNavigate();
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false); 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError(''); 
+    setError('');
+    setIsSubmitting(true); 
 
     const form = event.target;
     const username = form.username.value;
@@ -21,19 +23,14 @@ const Login = () => {
       const { token, data } = response.data;
       const { role } = data;
 
-      console.log('User Role:', role);
-      console.log('User Data:', response.data);
-
       localStorage.setItem('token', token);
       localStorage.setItem('role', role);
 
-      toast.success('Login successful!', { position: 'top-center', autoClose: 2000 });
+      toast.success('Login successful!', { position: 'top-center', autoClose: 1000 });
 
       if (role === 'admin') {
-        console.log('Redirecting to admin dashboard');
         navigate('/admin/resignations');
       } else if (role === 'employee') {
-        console.log('Redirecting to user dashboard');
         navigate('/user/resign');
       } else {
         setError('Unauthorized access.');
@@ -42,7 +39,8 @@ const Login = () => {
     } catch (error) {
       setError('Invalid credentials. Please try again.');
       toast.error('Invalid credentials. Please try again.', { position: 'top-right', autoClose: 3000 });
-      console.error('Login failed:', error);
+    } finally {
+      setIsSubmitting(false); // Stop loader
     }
   };
 
@@ -74,9 +72,22 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600"
+            className={`w-full px-4 py-2 text-white rounded-md focus:outline-none ${
+              isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'
+            }`}
+            disabled={isSubmitting}
           >
-            Login
+            {isSubmitting ? (
+              <div className="flex items-center justify-center">
+                <svg className="animate-spin h-5 w-5 mr-2 text-white" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                </svg>
+                Logging in...
+              </div>
+            ) : (
+              'Login'
+            )}
           </button>
         </form>
         <p className="mt-4 text-center text-gray-600">

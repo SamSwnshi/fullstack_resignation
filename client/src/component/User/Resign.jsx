@@ -33,7 +33,7 @@ const Resign = () => {
     };
 
     return (
-        <div className="flex items-center justify-center  h-screen bg-gray-100 overflow-hidden border-amber-400">
+        <div className="flex items-center justify-center h-screen bg-gray-100">
             <div className="max-w-md w-full bg-white rounded-lg shadow-md p-6">
                 <h2 className="text-2xl font-bold mb-6 text-center">Submit Resignation</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -51,10 +51,22 @@ const Resign = () => {
                     </div>
                     <button
                         type="submit"
-                        className={`w-full p-2 rounded ${isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600 text-white'}`}
+                        className={`w-full p-2 rounded flex items-center justify-center ${
+                            isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600 text-white'
+                        }`}
                         disabled={isSubmitting} 
                     >
-                        {isSubmitting ? "Submitting..." : "Submit Resignation"}
+                        {isSubmitting ? (
+                            <div className="flex items-center">
+                                <svg className="animate-spin h-5 w-5 mr-2 text-white" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                                </svg>
+                                Submitting...
+                            </div>
+                        ) : (
+                            "Submit Resignation"
+                        )}
                     </button>
                 </form>
             </div>
