@@ -10,7 +10,6 @@ const UserHeader = () => {
     const fetchResignationStatus = async () => {
       try {
         const response = await api.post("/user/resignation_status");
-        console.log("Resignation Data:", response.data);
         setResignationStatus(response.data.resignation?.status || null);
       } catch (error) {
         console.error("Failed to fetch resignation status:", error);
